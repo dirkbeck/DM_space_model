@@ -1,8 +1,28 @@
+clear; close all
 
-[distance_to_pt_multiplier,gravity_multiplier,ews,...
-    strio_incs,da_incs,lh_incs,strio_grid,da_grid,lh_grid,...
-    circuit_preference_pt,unique_states,n_state_component,n_interp_inc] =...
-    trajectory_params();
+n_interp_inc = 15;
+
+% large # = benefit falls off more quickly if you're far from a state
+distance_to_pt_multiplier = 1; 
+% importance of returning back to a central stable point
+gravity_multiplier = 1;
+circuit_preference_pt = [1 1 1]; % strio,da,lh
+ews = [5 5 1 1]';
+
+unique_states = dec2bin(0:2^4-1)-'0';
+
+strio_incs = linspace(0,3,n_interp_inc);
+da_incs = linspace(0,3,n_interp_inc);
+lh_incs = linspace(0,3,n_interp_inc);
+
+[strio_grid,da_grid,lh_grid] = meshgrid(strio_incs(2:end-1),...
+    da_incs(2:end-1),lh_incs(2:end-1));
+
+% high-D space
+state_values_weights = [zeros(1,15) 1];
+[dx,dy,dz] = circuit_configuration_trajectory(...
+    strio_incs,da_incs,lh_incs,4,distance_to_pt_multiplier,...
+    gravity_multiplier,state_values_weights,ews,n_interp_inc);
 
 time_onset = 10;
 time_incubation = 100;
