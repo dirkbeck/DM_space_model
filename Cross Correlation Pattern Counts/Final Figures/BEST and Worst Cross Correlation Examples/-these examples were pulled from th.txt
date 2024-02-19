@@ -1,0 +1,3 @@
+-these examples were pulled from the following folder
+
+C:\Users\ldd77\OneDrive\Desktop\Striosome-Matrix-Analysis\Fig7A_triplet-example\Control split with filter updated michael for EQR and rev cb, neg inf micheal for everything else\CB\Negative Slope
