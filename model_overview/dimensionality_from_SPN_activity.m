@@ -41,5 +41,19 @@ for i=1:length(unique(space_labels))
     title(titles(i))
 end
 zlabel("sSPN activity")
-legend("experimental observation","linear regression fit")
+legend("simulated observation","linear regression fit")
+set(gcf,'Renderer','painters')
+
+figure; hold on
+for i=1:length(unique(space_labels))
+    scatter3(X(space_labels==i,1),X(space_labels==i,2), ...
+            y(space_labels==i),[],cols(i,:),'filled')
+end
+hold off
+xlabel("feature 1 (e.g. temperature)")
+ylabel("feature 2 (e.g. music volume)")
+zlabel("sSPN activity")
+zlim([-5 5])
+legend(["DM cluster 1","DM cluster 2","DM cluster 3","DM cluster 4"])
+view(3)
 set(gcf,'Renderer','painters')
