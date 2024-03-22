@@ -1,5 +1,6 @@
 clear; close all
 rng('default')
+addpath(fileparts(pwd))
 
 %% first, link striosome activity to possible spaces
 
@@ -7,7 +8,7 @@ n_features = 2;
 n_pcs = 2;
 n_obs = 100;
 noise_coef = 0.1;
-dim_prob = .2; % how many dimensions in space, on average?
+dim_prob = .8; % how many dimensions in space, on average?
 
 % create some random data
 X = randn(n_obs,n_features);
@@ -17,7 +18,7 @@ X = randn(n_obs,n_features);
 % hidden rules map X to SPN activity. These are PCs in the space model,
 % similar to Beta in a linear regression
 pcs = randn(n_features,n_pcs);
-spaces = rand(n_obs,n_pcs)>dim_prob; 
+spaces = rand(n_obs,n_pcs)>(1-dim_prob); 
 y = sum(X*pcs.*spaces,2)+noise_coef*randn(n_obs,1); % SPN activity
 [unique_spaces,~,space_labels] = unique(spaces,'rows'); % labels indicate different spaces
 
@@ -86,17 +87,18 @@ for act=1:length(actions_list)
     action_values = zeros([size(actions),n_actions]);
     for i = 1:n_actions
         action_i = unique_actions(i);
-        mdl_i = fitlm([optionsx_vec,optionsy_vec],...
-            double(actions_vec==action_i));
+        mdl_i = mnrfit([optionsx_vec,optionsy_vec],...
+            1-double(actions_vec==action_i)+1);
         for j = 1:size(actions,1)
             for k = 1:size(actions,2)
-                action_values(j,k,i) = mdl_i.Coefficients.Estimate(1) + ...
-                    mdl_i.Coefficients.Estimate(2) * optionsx(j,k) + ...
-                    mdl_i.Coefficients.Estimate(3) * optionsy(j,k);
+                action_values(j,k,i) = 1/(1+exp(-(...
+                    mdl_i(1) + ...
+                    mdl_i(2) * optionsx(j,k) + ...
+                    mdl_i(3) * optionsy(j,k))));
             end
         end
     end
-    action_values = min(max(action_values,0),1);
+    action_values = action_values/2; % divided by 2 so that max sum is 1
     
     cmap = actioncmap();
     symbols = ["x","d","o","*","v"];
