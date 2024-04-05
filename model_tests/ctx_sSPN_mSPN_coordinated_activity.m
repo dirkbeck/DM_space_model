@@ -2,30 +2,42 @@ clear; close all
 rng('default')
 
 n_tstep = 100;
-n_ctx = 10;
+n_ctx = 5;
 n_SPN = 3;
 t = linspace(0,2*pi,n_tstep);
 
-% create a cortex signal -- make it very rank 1
-ctx_ews = [1 .5 repelem(.1,n_ctx-2)];
-Sigma = sprandsym(n_ctx,1,ctx_ews); % randomly create a covariance matrix
-[ev,~] = eigs(Sigma);
-ctx = (sin(t).*ev(:,1) + cos(t).*ev(:,2) + sin(2*t).*ev(:,3))' + ...
-    1*mvnrnd(zeros(1,n_ctx),Sigma,n_tstep);
+% create a cortex signal
+evs = [2 1 .5 .2 .1*ones(1,n_ctx-4)];
+input_signal = [sin(t/2)*evs(1); sin(3*t)*evs(2); cos(5*t)*evs(3); ...
+    cos(2*t+1)*evs(4); sin(t+1)*evs(5)];
 
-SPN = ctx*ev;
-sSPN = SPN(:,1:n_SPN);
-mSPN = SPN(:,1:n_SPN);
-mSPN(:,2:n_SPN) = 0; % reduce activity for out-of-space
+titles = ["mSPN, 1D DM-space","mSPN, 2D DM-space"];
 
 figure
-tiledlayout(2,1)
-nexttile
-plot(linspace(0,1,n_tstep),sSPN)
-ylabel("sSPN activity (arb. u.)")
-nexttile
-plot(linspace(0,1,n_tstep),mSPN)
+tiledlayout(3,1)
+nexttile; hold on
+plot(linspace(0,1,n_tstep),input_signal)
+plot(linspace(0,1,n_tstep),sum(input_signal),'LineWidth',10,'Color','k')
+hold off
+title("mSPN")
+ylim([-1 4])
+for i=[1 2]
+    ylabel("sSPN activity (arb. u.)")
+    nexttile; hold on
+    plot(linspace(0,1,n_tstep),input_signal(1:i,:))
+    plot(linspace(0,1,n_tstep),sum(input_signal(1:i,:),1),'LineWidth',10,'Color','k')
+    hold off
+    title(titles(i))
+    ylim([-1 4])
+end
 xlabel("time (arb. u.)")
 ylabel("mSPN activity (arb. u.)")
 legend(["dimension 1 (e.g. reward)","dimension 2 (e.g. cost)",...
-    "dimension 3 (e.g. hunger)"])
+    "dimension 3 (e.g. hunger)", "total activity"])
+
+% correlation
+figure
+plot(0:4,[0 cumsum(evs(1:4))/sum(evs)],'-o');
+xlabel("DM-space dimensionality")
+ylabel("correlation, sSPN and msSPN activities")
+ylim([0 1])
