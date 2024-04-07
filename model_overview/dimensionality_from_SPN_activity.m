@@ -73,9 +73,9 @@ X_ = X*w_estimate;
 
 actions = zeros(n_obs,1);
 actions(space_labels==1) = randi(2,sum(space_labels==1),1);
-actions(space_labels==2) = round(1./(1+exp(-ground_truth_y(space_labels==2))+randn))+1;
-actions(space_labels==3) = round(1./(1+exp(-ground_truth_y(space_labels==3))+randn))+1;
-actions(space_labels==4) = round(1./(1+exp(-ground_truth_y(space_labels==4))+randn))+1;
+actions(space_labels==2) = round(1./(1+exp(-ground_truth_y(space_labels==2)+randn)))+1;
+actions(space_labels==3) = round(1./(1+exp(-ground_truth_y(space_labels==3)+randn)))+1;
+actions(space_labels==4) = round(1./(1+exp(-ground_truth_y(space_labels==4)+randn)))+1;
 
 titles = (["non-D","2nd dim. in space","1st dim. in space","2D space"]);
 
