@@ -4,113 +4,71 @@ rng('default')
 
 % global params
 n_tstep = 5001;
-in_space_threshold = .75;
+in_space_threshold = 1;
 tau = 1;
 z_da = 0;
 w_SNc_dsSPN = 5;
 w_SNc_isSPN = 5;
 w_SNc_dmSPN = 5;
 w_SNc_imSPN = 5;
-stp_constant = .01;
+stp_constant = -.01;
+compartment_addition = [0 0 0 0];
 
-%% example of space switching at two levels of dopamine
+%% example of space switching when each compartment is stimulated
 
 t = linspace(0,20*pi,n_tstep);
-input_signal1 = [2 1 -2 -2] + [sin(t)' cos(t)' sin(2*t)' cos(2*t)'];
-w_SNc_dsSPNs = [10 0];
-w_SNc_isSPNs = [10 0];
+input_signal1 = [2 1 0 0] + [sin(t)' cos(t)' sin(2*t)' cos(2*t)'];
+addition_incs = linspace(-1,1,100);
 
-for i=1:2
+for i=1:length(addition_incs)
     for j=1:4 % dimensions
-        [in_space_D1_dims{i}(j,:),in_space_D2_dims{i}(j,:)] = ...
+        [dim_in_D1_space,dim_in_D2_space] = ...
             system_sim(input_signal1(:,j),n_tstep,in_space_threshold, ...
-            z_da,w_SNc_dsSPNs(i),w_SNc_isSPNs(i),...
-            w_SNc_dmSPN,w_SNc_imSPN,tau,stp_constant);
+            z_da,w_SNc_dsSPN,w_SNc_isSPN,...
+            w_SNc_dmSPN,w_SNc_imSPN,tau,stp_constant, ...
+            [addition_incs(i),addition_incs(i),0,0]);
+        dims_in_D1_space(i,j) = mean(dim_in_D1_space);
+        dims_in_D2_space(i,j) = mean(dim_in_D2_space);
     end
 end
 
 cmap = [1 1 1; 1 .5 0; 0 0 1; 1 0 0; 0 1 0];
-titles = ["more dopamine","less dopamine"];
+titles = ["high sSPN","high mSPN","control"];
 
-figure; tiledlayout(2,1)
-for i=1:length(in_space_D1_dims)
-    nexttile
-    imagesc(linspace(0,5,n_tstep),1:4,in_space_D1_dims{i}.*[4 3 2 1]')
-    xlabel("time (s)")
-    ylabel("dimensions used in direct pathway space")
-    title(titles(i))
-    colormap(cmap)
-    clim([0 4])
-    set(gcf,'Renderer','painters')
-    yticklabels('')
-end
+figure; hold on
+plot(addition_incs,4*mean(dims_in_D1_space,2))
+plot(addition_incs,4*mean(dims_in_D2_space,2))
+hold off
+xlabel("sSPN activity (arb. u.)")
+ylabel("av. dec.-space dimensionality");
+ylim([0 4])
+legend(["direct pathway","indirect pathway"])
 
-figure; tiledlayout(2,1)
-for i=1:length(in_space_D2_dims)
-    nexttile
-    imagesc(linspace(0,5,n_tstep),1:4,in_space_D2_dims{i}.*[4 3 2 1]')
-    xlabel("time (s)")
-    ylabel("dimensions used in indirect pathway space")
-    title(titles(i))
-    colormap(cmap)
-    clim([0 4])
-    set(gcf,'Renderer','painters')
-    yticklabels('')
-end
-
-input_plot(input_signal1,cmap)
-
-%% effect of D1/D2 weight on strio D1 and D2
+%% effect of dopamine on decision-space
 
 % used the cortex data from above
 
-w_SNc_SPNs = linspace(0,10,100);
+z_das = linspace(-1,1,100);
 
-for i=1:length(w_SNc_SPNs)
+for i=1:length(z_das)
     for j=1:4
         % sSPN
         [dim_in_D1_space,dim_in_D2_space] = ...
             system_sim(input_signal1(:,j),n_tstep,in_space_threshold, ...
-            z_da,w_SNc_SPNs(i),w_SNc_SPNs(i),...
-            w_SNc_dmSPN,w_SNc_imSPN,tau,stp_constant);
+            z_das(i),w_SNc_dsSPN,w_SNc_isSPN,...
+            w_SNc_dmSPN,w_SNc_imSPN,tau,stp_constant,compartment_addition);
         dims_in_D1_space(i,j) = mean(dim_in_D1_space);
         dims_in_D2_space(i,j) = mean(dim_in_D2_space);
-
-        % mSPN
-        [~,~,~,~,m_d,m_i] = ...
-            system_sim(input_signal1(:,j),n_tstep,in_space_threshold, ...
-            z_da,w_SNc_dsSPN,w_SNc_isSPN,...
-            w_SNc_SPNs(i),w_SNc_SPNs(i),tau,stp_constant);
-
-        m_ds(j,:) = m_d;
-        m_is(j,:) = m_i;
     end
-    % assume that all in-space dimensions equally affect AV
-    D1_AVs = 1./(1+exp(-m_ds(1,:)));
-    D2_AVs = 1./(1+exp(-m_is(4,:)));
-    D1_space_dimensionality(i) = sum(dims_in_D1_space(i,:));
-    D2_space_dimensionality(i) = sum(dims_in_D2_space(i,:));
-    D1_AV(i) = mean(D1_AVs);
-    D2_AV(i) = mean(D2_AVs);
 end
 
-% Striosome space
 figure; hold on
-plot(w_SNc_SPNs,D1_space_dimensionality)
-plot(w_SNc_SPNs,D2_space_dimensionality)
+plot(z_das,4*mean(dims_in_D1_space,2))
+plot(z_das,4*mean(dims_in_D2_space,2))
 hold off
-xlabel("daSNC->sSPN weight (arb. u.)")
-ylabel("av. DM-space dimensionality");
-ylim([0 2])
-legend(["direct pathway","indirect pathway"])
-
-% Matrix subjective value
-figure; hold on
-plot(w_SNc_SPNs,D1_AV)
-plot(w_SNc_SPNs,D2_AV)
-hold off
-xlabel("daSNC->mSPN weight (arb. u.)")
-ylabel("av. action value");
+xlabel("daSNC activity (arb. u.)")
+ylabel("av. dec.-space dimensionality");
+ylim([0 4])
 legend(["direct pathway","indirect pathway"])
 
 %% examples of system response
@@ -128,7 +86,7 @@ for in = 1:length(input_signals)
     [dim_in_D1_space,dim_in_D2_space,s_d,s_i,m_d,m_i] = ...
             system_sim(input_signal,n_tstep,in_space_threshold, ...
             z_da,w_SNc_dsSPN,w_SNc_isSPN,...
-            w_SNc_dmSPN,w_SNc_imSPN,tau,stp_constant);
+            w_SNc_dmSPN,w_SNc_imSPN,tau,stp_constant,compartment_addition);
     figure; hold on
     plot(linspace(0,5,n_tstep),s_d)
     plot(linspace(0,5,n_tstep),s_i)
@@ -155,7 +113,7 @@ for i=1:length(PEs)
     [dim_in_D1_space,dim_in_D2_space,s_d,s_i,m_d,m_i] = ...
             system_sim(input_signal,n_tstep,in_space_threshold, ...
             z_da,w_SNc_dsSPN,w_SNc_isSPN,...
-            w_SNc_dmSPN,w_SNc_imSPN,tau,stp_constant);
+            w_SNc_dmSPN,w_SNc_imSPN,tau,stp_constant,compartment_addition);
     delta_sSPN_D1(i) = s_d((n_tstep-1)/2) - s_d(end);
     delta_sSPN_D2(i) = s_i((n_tstep-1)/2) - s_i(end);
     delta_mSPN_D1(i) = m_d((n_tstep-1)/2) - m_d(end);
@@ -175,18 +133,18 @@ legend(["sSPN D1","sSPN D2","mSPN D1", "mSPN D2"])
 
 %% Examples of with vs. without rebound
 
-input_signal = 10*[ones(1,(n_tstep-1)*1/4) zeros(1,(n_tstep-1)*3/4); ...
-                zeros(1,(n_tstep-1)/4) ones(1,(n_tstep-1)*1/4) zeros(1,(n_tstep-1)*2/4); ...
-                zeros(1,(n_tstep-1)/2) ones(1,(n_tstep-1)*1/4) zeros(1,(n_tstep-1)/4); ...
+input_signal = 10*[ones(1,(n_tstep-1)*1/4-100) zeros(1,(n_tstep-1)*3/4+100); ...
+                zeros(1,(n_tstep-1)/4) ones(1,(n_tstep-1)*1/4-100) zeros(1,(n_tstep-1)*2/4+100); ...
+                zeros(1,(n_tstep-1)/2) ones(1,(n_tstep-1)*1/4-100) zeros(1,(n_tstep-1)/4+100); ...
                 zeros(1,(n_tstep-1)*3/4),ones(1,(n_tstep-1)/4)]';
-stp_constants = [0 .1];
+stp_constants = [0 -.1];
 
 for i=1:length(stp_constants)
     for j=1:4 % dimensions
         dims_in_space{i}(j,:) = ...
             system_sim(input_signal(:,j),n_tstep,in_space_threshold, ...
             z_da,w_SNc_dsSPN,w_SNc_isSPN,...
-            w_SNc_dmSPN,w_SNc_imSPN,tau,stp_constants(i));
+            w_SNc_dmSPN,w_SNc_imSPN,tau,stp_constants(i),compartment_addition);
     end
 end
 
@@ -211,42 +169,39 @@ input_plot(input_signal,cmap)
 
 function [dim_in_D1_space,dim_in_D2_space,s_d,s_i,m_d,m_i,w_dsSPN_SNc,w_isSPN_SNc] = ...
     system_sim(input_signal,n_tstep,in_space_threshold,z_da,w_SNc_dsSPN, ...
-    w_SNc_isSPN,w_SNc_dmSPN, w_SNc_imSPN,tau,stp_constant)
+    w_SNc_isSPN,w_SNc_dmSPN, w_SNc_imSPN,tau,stp_constant,compartment_addition)
     
     t=linspace(0,5,n_tstep);
     del_t = t(2)-t(1);
 
-    [s_d,s_i,m_d,m_i,w_dsSPN_SNc,w_isSPN_SNc,y_d,y_i] = deal(zeros(n_tstep,1));
+    [s_d,s_i,m_d,m_i,w_dsSPN_SNc,y_d,y_i] = deal(zeros(n_tstep,1));
     s_d(1) = 0;
     s_i(1) = 0;
     m_d(1) = 0;
     m_i(1) = 0;
-    w_dsSPN_SNc(1) = 1;
-    w_isSPN_SNc(1) = 1;
+    w_dsSPN_SNc(1) = -1; % inhibitory connection
+    w_isSPN_SNc = ones(1,n_tstep); % double inhibitory though GPe
     
     for i=2:n_tstep
         
-        y_d(i) = 1/(1+exp(w_dsSPN_SNc(i-1)*s_d(i-1)-z_da));
-        y_i(i) = 1/(1+exp(w_isSPN_SNc(i-1)*s_i(i-1)-z_da));
-        loop_back(i) = -w_SNc_dsSPN*(y_d(i) - 1/2);
-        dsd_dt = -s_d(i-1) - input_signal(i-1) - w_SNc_dsSPN*(y_d(i) - 1/2);
-        dsi_dt = -s_i(i-1) + input_signal(i-1) + w_SNc_isSPN*(y_i(i) - 1/2);
-        dmd_dt = -m_d(i-1) + input_signal(i-1) + w_SNc_dmSPN*(y_d(i) - 1/2);
-        dmi_dt = -m_i(i-1) - input_signal(i-1) - w_SNc_imSPN*(y_i(i) - 1/2);
+        y_d(i) = 1/(1+exp(-w_dsSPN_SNc(i-1)*s_d(i-1)-z_da));
+        y_i(i) = 1/(1+exp(-w_isSPN_SNc(i-1)*s_i(i-1)-z_da));
+        dsd_dt = -s_d(i-1) - input_signal(i-1) + compartment_addition(1) - w_SNc_dsSPN*(y_d(i) - 1/2);
+        dsi_dt = -s_i(i-1) - input_signal(i-1) + compartment_addition(2) + w_SNc_isSPN*(y_i(i) - 1/2);
+        dmd_dt = -m_d(i-1) + input_signal(i-1) + compartment_addition(3) + w_SNc_dmSPN*(y_d(i) - 1/2);
+        dmi_dt = -m_i(i-1) + input_signal(i-1) + compartment_addition(4) - w_SNc_imSPN*(y_i(i) - 1/2);
         dw_dsSPN_SNc_dt = stp_constant * s_d(i-1);
-        dw_isSPN_SNc_dt = stp_constant * s_i(i-1);
         
         s_d(i) = s_d(i-1) + tau*dsd_dt*del_t;
         s_i(i) = s_i(i-1) + tau*dsi_dt*del_t;
         m_d(i) = m_d(i-1) + tau*dmd_dt*del_t;
         m_i(i) = m_i(i-1) + tau*dmi_dt*del_t;
         w_dsSPN_SNc(i) = w_dsSPN_SNc(i-1) + dw_dsSPN_SNc_dt*del_t;
-        w_isSPN_SNc(i) = w_isSPN_SNc(i-1) + dw_isSPN_SNc_dt*del_t;
 
     end
 
-    dim_in_D1_space = y_d > in_space_threshold;
-    dim_in_D2_space = y_i > in_space_threshold;
+    dim_in_D1_space = m_d > in_space_threshold;
+    dim_in_D2_space = m_i > in_space_threshold;
 
 end
 
