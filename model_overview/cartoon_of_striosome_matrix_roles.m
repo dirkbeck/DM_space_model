@@ -2,16 +2,14 @@ clear; close all
 addpath(fileparts(pwd))
 
 n_grid_incs = 3; % number of increments to plot along each dimension
-n_actions = 4;
+n_actions = 2;
 
 incs = linspace(0,1,n_grid_incs+1);
 [cost,reward,hunger] = meshgrid(incs,incs,incs);
 
 % example subjective values in 3D state space for the 4 actions
-example_signal(:,:,:,1) = 5*reward - 2*cost - hunger; % approach
-example_signal(:,:,:,2) = - 5*reward + 2*cost; % avoid
-example_signal(:,:,:,3) = hunger; % freeze
-example_signal(:,:,:,4) = -reward - cost - hunger; % wander
+example_signal(:,:,:,1) = 5*reward - 2*cost - hunger; % play music
+example_signal(:,:,:,2) = - 5*reward + 2*cost; % stand up
 example_signal = min(max(example_signal,0),.5);
 
 % take slices for 2D and 1D
