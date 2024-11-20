@@ -72,15 +72,15 @@ for i=1:n_inc
 end
 
 figure; hold on
-plot(incs,GPi_dims(:,2))
-plot(incs,LH_dims(:,2))
-plot(incs,RMTg_dims(:,2))
-plot(incs,DA_dims(:,2))
+plot(incs,4*GPi_dims(:,2))
+plot(incs,4*LH_dims(:,2))
+plot(incs,4*RMTg_dims(:,2))
+plot(incs,4*DA_dims(:,2))
 hold off
 legend(["GPi","LH","RMTg","DA of SNc"])
 xlabel("activity (arb. u.)")
-ylabel("prob. dimension in space")
-ylim([0 1])
+ylabel("av. dec.-dims used")
+ylim([0 4])
 
 %% functions
 
