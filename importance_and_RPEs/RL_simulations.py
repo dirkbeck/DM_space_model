@@ -87,7 +87,7 @@ for episode in range(num_episodes):
         old_q_value = q_table[current_state][action]
         q_table[current_state][action] = (1 - learning_rate) * q_table[current_state][action] + \
                                          learning_rate * (reward + discount_factor * np.max(q_table[next_state]))
-        rpes.append(abs(q_table[current_state][action] - old_q_value))
+        rpes.append(q_table[current_state][action] - old_q_value)
         importances.append(calculate_importance(q_table, current_state))
         trajectory.append(current_state)
 
@@ -131,7 +131,6 @@ all_importances = [imp for episode_imps in importances_per_episode for imp in ep
 plt.scatter(all_rpes, all_importances, s=10, alpha=0.3, color='black')
 plt.xlabel("RPEs over all episodes")
 plt.ylabel("Importances over all episodes")
-plt.title("Scatter Plot with Density Heatmap (Gaussian Kernel, Log Scale)")
 mpl.rcParams['pdf.fonttype'] = 42
 plt.savefig('Plot2.pdf')
 if show_plots:
@@ -151,14 +150,14 @@ max_qval = 0
 for i, ep in enumerate(eps_to_plot):
     # Plot RPEs
     colors = ['green' if val >= 0 else 'red' for val in rpes_per_episode[ep]]
-    axes[i, 0].bar(range(10), rpes_per_episode[ep][-10:], color=colors)
+    axes[i, 0].bar(range(len(rpes_per_episode[ep][-10:])), rpes_per_episode[ep][-10:], color=colors[-10:])
     axes[i, 0].set_xlabel('Time Step')
     axes[i, 0].set_ylabel("RPEs")
     axes[i, 0].set_title(f'RPEs During Episode {ep}')
 
     # Plot Importances
     colors = ['green' if val >= 0 else 'red' for val in importances_per_episode[ep]]
-    axes[i, 1].bar(range(10), importances_per_episode[ep][-10:], color=colors)
+    axes[i, 1].bar(range(len(importances_per_episode[ep][-10:])), importances_per_episode[ep][-10:], color=colors[-10:])
     axes[i, 1].set_xlabel('Time Step')
     axes[i, 1].set_ylabel("Importances")
     axes[i, 1].set_title(f'Importances During Episode {ep}')
