@@ -291,13 +291,9 @@ all_reward_sizes = [all_possible_reward_sizes[:i] for i in range(len(all_possibl
 importances = []
 for i, (reward_locations, reward_sizes) in enumerate(zip(all_reward_locations, all_reward_sizes)):
     q_table = calculate_true_q_values(reward_locations, reward_sizes, grid_size, movement_cost, 1000)
-    plot_qtable(q_table, grid_size, f'Q-table, Reward Locations {reward_locations}.pdf', show_plots, state,
-                f'Q-table, Reward Locations {reward_locations}',reward_locations)
-    all_state_importances = []
-    for x in range(10):
-        for y in range(10):
-            all_state_importances.append(calculate_importance(q_table, state))
-    importances.append(np.mean(all_state_importances))
+    # plot_qtable(q_table, grid_size, f'Q-table, Reward Locations {reward_locations}.pdf', show_plots, state,
+    #             f'Q-table, Reward Locations {reward_locations}',reward_locations)
+    importances.append(calculate_importance(q_table, state))
 
 plt.figure(figsize=(8, 6))
 plt.plot(range(len(all_reward_locations)), importances, '-o')
