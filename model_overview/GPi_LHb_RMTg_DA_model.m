@@ -61,6 +61,7 @@ colorbar
 end
 
 %% now incremented across ranges
+% Direct pathway
 n_inc = 100;
 incs = linspace(0,1,n_inc);
 for i=1:n_inc
@@ -76,6 +77,17 @@ plot(incs,4*LH_dims(:,2))
 plot(incs,4*RMTg_dims(:,2))
 hold off
 legend(["GPi","LH","RMTg"])
+xlabel("activity (arb. u.)")
+ylabel("av. dec.-dims used")
+ylim([0 4])
+
+% Indirect pathway
+da = 1./(1+exp(-1+incs));
+
+figure
+plot(incs,4*da)
+hold off
+legend("GPe")
 xlabel("activity (arb. u.)")
 ylabel("av. dec.-dims used")
 ylim([0 4])
