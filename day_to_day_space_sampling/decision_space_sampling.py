@@ -1,5 +1,3 @@
-# prompt: make the entire surface transparent, including the edges
-
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.special import comb
@@ -12,15 +10,12 @@ n_inc = 20
 n_dim = 4
 max_val = 5
 
-# Create linearly spaced arrays
 sSPN = np.linspace(0, max_val, n_inc)
 daSNC = np.linspace(0, max_val, n_inc)
 LHb = np.linspace(0, max_val, n_inc)
 
-# Initialize probability space
 prob_space = np.zeros((n_inc, n_inc, n_inc, 5))
 
-# Calculate probabilities
 for i in range(n_inc):
     for j in range(n_inc):
         for k in range(n_inc):
@@ -72,7 +67,6 @@ for l in range(5):
         X = np.full(Y.shape, LHb[slice_idx])
         ax.plot_surface(X, Y, Z, facecolors=plt.cm.viridis(prob_space[:, :, slice_idx, l]), edgecolor='none', shade=False, alpha=.5)
 
-    # Make the points bigger
     ax.scatter(max_x, max_y, max_z, color='red', marker='o', s=100, label='Maximum')
     ax.scatter(min_x, min_y, min_z, color='blue', marker='o', s=100, label='Minimum')
 
