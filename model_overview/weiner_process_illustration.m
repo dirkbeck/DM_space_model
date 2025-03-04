@@ -4,7 +4,7 @@ rng('default')
 
 max_t = 5;
 n_sim = 1000;
-% using the SV example from supplementary_multinomial_regression_cartoon.m
+% using the SV example from mSPN_multinomial_regression_example.m
 drift_rate = [0.9180, 0.2894, 0.2891, 0.6451]; 
 titles = ["Non-impulsive","Impulsive"];
 noise = 10;
