@@ -32,7 +32,5 @@ extractFitData('twdb_stress2', 'PLSvsSTRIO');
 examplePairedNeuronPLot('twdb_control', 'PLSvsFSI', 54); % subplot 1
 examplePairedNeuronPLot('twdb_stress', 'PLSvsFSI', 32); % subplot 2
 
-%% Extended Data Figures 3e,f. **TBD**
-
 %% Extended Data Figures 4o,p (Experimental FSI and sSPN projecting cortex correlation)
 plotFitParamOfNeuronTriplets;
