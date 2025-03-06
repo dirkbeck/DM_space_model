@@ -1,4 +1,4 @@
-%% Synchrony plot (1st plot)
+%% Figure 3f. (Synchrony plot)
 % 1st step
 extractNeuronsFromSameSession('twdb_control', 'PL');
 extractNeuronsFromSameSession('twdb_control', 'FSI');
@@ -14,7 +14,7 @@ covAndBinCtMatrixOfNeuronsFromSameSession('twdb_control', 'sameSessionStriosomen
 % 3rd step
 neuronSynchronyPlot(varargin);
 
-%%  PLS-FSI firing rate (2nd plot)
+%% Extended Data Figures 4k,l (PLS-FSI firing rate)
 % 1st step
 differentNeuronPairsInDatabase('twdb_control');
 differentNeuronPairsInDatabase('twdb_stress');
@@ -32,11 +32,7 @@ extractFitData('twdb_stress2', 'PLSvsSTRIO');
 examplePairedNeuronPLot('twdb_control', 'PLSvsFSI', 54); % subplot 1
 examplePairedNeuronPLot('twdb_stress', 'PLSvsFSI', 32); % subplot 2
 
-%% PLS-Striosome firing rate (3rd plot)
+%% Extended Data Figures 3e,f. **TBD**
 
-
-%% Experimental FSI and sSPN projecting cortex correlation (4th plot)
-plotFitParamOfNeuronTriplets;
-
-%% Experimental Coeff. a (5th Plot)
+%% Extended Data Figures 4o,p (Experimental FSI and sSPN projecting cortex correlation)
 plotFitParamOfNeuronTriplets;
