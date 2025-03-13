@@ -2,6 +2,21 @@
 addpath(genpath(pwd));
 %% load the data into the enviornment
 [dbs,twdbs] = loadData(['C:\Users\ldd77' filesep 'Downloads' filesep 'twdbs.mat']); %make sure to edit the passed file path so that it points to your database
+%% load the bootstapped random pattern counts into the environmnet to create standard deviation lines on plot
+load("ShortRandomExcitedExcited.mat")
+load("ShortRandomExcitedInhibited.mat")
+load("ShortRandomInhibitedExcited.mat")
+load("ShortRandomInhibitedInhibited.mat")
+array_of_random_distributions = {allShortExcitedExcited,allShortExcitedInhibited,allShortInhibitedExcited,allShortInhibitedInhibited};
+%% calculate some means and std
+standardDeviationsLinesLocations= nan(4,3);
+for i=1:length(array_of_random_distributions)
+    mean_of_task = mean(array_of_random_distributions{i});
+    which_std_dvts = [1,2,3];
+    standardDeviationsLinesLocations(i,:) = mean_of_task + (std(array_of_random_distributions{i}) * which_std_dvts );
+    
+    %yline(standardDeviationsLinesLocations,'--','Color','red')
+end
 %% Fig 3e
 clc;
 fig_creation_dir =cd(fullfile(".","Pattern Analysis/"));

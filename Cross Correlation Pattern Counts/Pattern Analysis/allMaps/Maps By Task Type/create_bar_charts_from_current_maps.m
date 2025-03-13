@@ -88,7 +88,7 @@ disp(table_which_will_hold_everything);
 % end
 
 
-%% get only Long CB and TR across Stress and Stress 2
+%% get only Long CB and TR across Control and Stress
 list_of_patterns_i_want = ["Excited Excited","Excited Inhibited","Inhibited Excited","Inhibited Inhibited"];
 list_of_task_type_i_want = ["Task Type CB", "Task Type TR"];
 length_i_want = "Short";
@@ -107,15 +107,16 @@ for i =1:length(list_of_patterns_i_want)
     % table_of_only_what_I_want = sortrows(table_of_only_what_I_want,"Task Type and Conc");
     disp(table_of_only_what_I_want)
     og_table_of_only_what_i_want = table_of_only_what_I_want;
-    % table_of_only_what_I_want(1,:) = og_table_of_only_what_i_want(3,:);
-    % table_of_only_what_I_want(2,:) = og_table_of_only_what_i_want(1,:);
-    % table_of_only_what_I_want(3,:) = og_table_of_only_what_i_want(4,:);
-    % table_of_only_what_I_want(4,:) = og_table_of_only_what_i_want(2,:);
+    table_of_only_what_I_want(1,:) = og_table_of_only_what_i_want(2,:);
+    table_of_only_what_I_want(2,:) = og_table_of_only_what_i_want(1,:);
+    table_of_only_what_I_want(3,:) = og_table_of_only_what_i_want(4,:);
+    table_of_only_what_I_want(4,:) = og_table_of_only_what_i_want(3,:);
 
     labels = categorical(strcat(table_of_only_what_I_want.Database, " ",table_of_only_what_I_want.('Task Type and Conc')," ", table_of_only_what_I_want.Length));
     labels = reordercats(labels,strcat(table_of_only_what_I_want.Database, " ",table_of_only_what_I_want.('Task Type and Conc')," ", table_of_only_what_I_want.Length));
 
     bar(labels,table_of_only_what_I_want.("Pattern Count"))
+    yline(standardDeviationsLinesLocations(i,:),'--','Color','red')
     title(strcat(pattern_i_want," ", task_type_i_want))
     %     end
 end
@@ -152,6 +153,7 @@ for i =1:length(list_of_patterns_i_want)
     labels = reordercats(labels,strcat(table_of_only_what_I_want.Database, " ",table_of_only_what_I_want.('Task Type and Conc')," ", table_of_only_what_I_want.Length));
 
     bar(labels,table_of_only_what_I_want.("Pattern Count"))
+    yline(standardDeviationsLinesLocations(i,:),'--','Color','red')
     title(strcat(pattern_i_want," ", task_type_i_want))
 %     ylim([0,1.2])
     %     end

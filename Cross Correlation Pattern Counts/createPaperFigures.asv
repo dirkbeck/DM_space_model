@@ -2,6 +2,17 @@
 addpath(genpath(pwd));
 %% load the data into the enviornment
 [dbs,twdbs] = loadData(['C:\Users\ldd77' filesep 'Downloads' filesep 'twdbs.mat']); %make sure to edit the passed file path so that it points to your database
+%% load the bootstapped random pattern counts into the environmnet to create standard deviation lines on plot
+load("ShortRandomExcitedExcited.mat")
+load("ShortRandomExcitedInhibited.mat")
+load("ShortRandomInhibitedExcited.mat")
+load("ShortRandomInhibitedInhibited.mat")
+array_of_random_distributions = {allShortExcitedExcited,allShortExcitedInhibited,allShortInhibited};
+%% calculate some means and std
+mean_of_ee = mean(allShortExcitedExcited);
+which_std_dvts = [1,2,3];
+standardDeviationsLines = mean_of_ee + (std(allShortExcitedExcited) * which_std_dvts );
+yline(standardDeviationsLines,'--','Color','red')
 %% Fig 3e
 clc;
 fig_creation_dir =cd(fullfile(".","Pattern Analysis/"));
@@ -53,27 +64,20 @@ cd(fig_creation_dir);
 fig_creation_dir = cd(fullfile(".","Pattern Analysis","allMaps","Maps By Task Type"));
 create_bar_charts_from_current_maps;
 cd(fig_creation_dir);
-%% Extended Figure 4a & Extended Figure 4b
-fig_creation_dir = cd(fullfile("."));
+%% Extended Figure 4a & Extended Figure 4b & Extended Figure 4c
+clc;
+fig_creation_dir = cd(fullfile(".","Pattern Analysis/"));
+createCDFsforAllTaskTypes;
 cd(fig_creation_dir);
-%% Extended Figure 4c
-fig_creation_dir = cd();
+%% Extended Figure 4d 
+fig_creation_dir = cd(fullfile(".","Pattern Analysis/"));
+createSkewnessBarChartOfTRAndCBAcrossControlAndStress2;
 cd(fig_creation_dir);
-%% Extended Figure 4d
-fig_creation_dir = cd();
+%% Extended Figure 4e & Extended Figure 4f & Extended Figure 4g & Extended Figure 4h
+fig_creation_dir = cd(fullfile(".","Pattern Analysis","allMaps","Maps By Task Type"));
+create_bar_charts_from_current_maps;
 cd(fig_creation_dir);
-%% Extended Figure 4e
-fig_creation_dir = cd();
-cd(fig_creation_dir);
-%% Extended Figure 4f
-fig_creation_dir = cd();
-cd(fig_creation_dir);
-%% Extended Figure 4g
-fig_creation_dir = cd();
-cd(fig_creation_dir);
-%% Extended Figure 4h
-fig_creation_dir = cd();
-cd(fig_creation_dir);
+
 %% Extended Figure 4i
 fig_creation_dir = cd();
 cd(fig_creation_dir);
@@ -88,7 +92,4 @@ beginning_to_end_indexes = [2 2.5];
 cd(fullfile('.','allMaps','Maps By Task Type'));
 createLinearPatternCountGraphsByTaskType;
 ylim([0,1.2])
-cd(fig_creation_dir);
-%% Extended Figure 4j
-fig_creation_dir = cd();
 cd(fig_creation_dir);
