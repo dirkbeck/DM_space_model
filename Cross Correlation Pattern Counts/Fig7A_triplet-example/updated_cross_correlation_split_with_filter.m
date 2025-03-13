@@ -1,6 +1,6 @@
-%% load databases
-[dbs,twdbs] = loadData;
-%% run cross correlation
+% load databases
+%[dbs,twdbs] = loadData;
+% run cross correlation
 namesOfDatabases = ["Control","Stress1","Stress2"];
 list_of_which_tasks_should_be_split = ["TR"];
 where_to_split = 50;

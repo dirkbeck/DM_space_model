@@ -10,10 +10,10 @@
 %binSize=n will put n concentrations together
 %if there are not enough concentrations to split evenly between bins the last bin will have the fewest number of concentrations in it
 
-%% load databases
-[dbs,twdbs] = loadData;
-%% Create Skewness table
-binSize = 100;
+% load databases
+%[dbs,twdbs] = loadData;
+% Create Skewness table
+%binSize = 100;
 logOrNot = false;
 allTaskTypesAndConcentrationsPairedWithSkewness = containers.Map('KeyType','char','ValueType','any');
 namesOfDatabases = ["Control", "Stress 1","Stress 2"];
@@ -71,10 +71,12 @@ for i=1:1.5%length(twdbs)
                     histogram(log(abs(approachesToMixture)),linspace(0,max(log(abs(allCol6InModifedTable)),[],'all'),30))
                     histogram(log(abs(approachesToChoc)),linspace(0,max(log(abs(allCol6InModifedTable)),[],'all'),30))
                     xlabel("Log(Abs(Time to Decision))")
+                    xlim([0,10])
                 else
                     histogram(approachesToMixture,linspace(0,600,6000))
                     histogram(approachesToChoc,linspace(0,600,6000))
                     xlabel("Time to Decision")
+                    xlim([0,10])
                 end
                 
                 theMixtureSkew = skewness(approachesToMixture);
@@ -104,10 +106,12 @@ for i=1:1.5%length(twdbs)
             if logOrNot
                 histogram(log(abs(approachesToMixture)),linspace(0,max(log(abs(allCol6InModifedTable)),[],'all'),30))
                 histogram(log(abs(approachesToChoc)),linspace(0,max(log(abs(allCol6InModifedTable)),[],'all'),30))
+                xlim([0,10])
                 xlabel("Log(Abs(Time to Decision))")
             else
                 histogram(approachesToMixture,linspace(0,600,6000))
                 histogram(approachesToChoc,linspace(0,600,6000))
+                xlim([0,10])
                 xlabel("Time to Decision")
             end
             

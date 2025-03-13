@@ -6,7 +6,7 @@
 
 binSize = 1;
 
-%% All file names
+% All file names
 %each item in this string array is the name of the file which contains 10 maps, each of which contains a set of maps which do pattern counts for task types and concentrations
 %each file is for a different database
 %these files in have their maps split by task type and concentration, but you could change them to different maps which are only split by task type instead
@@ -54,7 +54,7 @@ hasConcentrations = false;   %this boolean is used to tell the function whether 
                             %if they do not then we must add an concentration value
                             %this concentration value does not reflect the actual concentration
                             %it is only used so that we can classify the row's skewness 
-for currentFile =2:2.5%length(allFilesToLoad)
+for currentFile =beginning_to_end_indexes(1):beginning_to_end_indexes(2)%length(allFilesToLoad)
     disp(databases(currentFile))
     %homeDir = cd("allMaps\");
     load(allFilesToLoad(currentFile))
@@ -304,7 +304,7 @@ for currentFile =2:2.5%length(allFilesToLoad)
         mkdir("Pattern Counts as Line Graphs")
         homeDir = cd("Pattern Counts as Line Graphs\");
 %         disp(pwd)
-        title(strcat(databases(currentDB),longOrShortTitles(longOrShort)," Pattern Chart","Task Type: ", allTheTaskTypes(i)))
+        title(strcat(databases(currentDB),longOrShortTitles(longOrShort)," Pattern Chart"))
         xlabel("Skewness")
         ylabel("Pattern Count")
         legend(patternNames)

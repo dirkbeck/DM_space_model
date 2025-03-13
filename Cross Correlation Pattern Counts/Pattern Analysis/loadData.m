@@ -1,8 +1,8 @@
-function [dbs,twdbs] = loadData()
+function [dbs,twdbs] = loadData(twdbs_dir)
 
 %IMPORTANT INFO
 %MODIFY twdbs_dir to point to the file which contains the twdbs file for this function to work
-twdbs_dir = ['C:\Users\ldd77' filesep 'Downloads' filesep 'twdbs.mat'];
+
 twdbs = load(twdbs_dir);
 
 twdb_control = twdbs.twdb_control;

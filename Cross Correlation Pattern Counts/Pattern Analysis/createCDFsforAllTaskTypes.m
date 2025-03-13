@@ -1,17 +1,17 @@
-%% load databases
-[dbs,twdbs] = loadData;
-%% Create CDFS
+% load databases
+%[dbs,twdbs] = loadData;
+% Create CDFS
 allTaskTypesAndConcentrationsPairedWithSkewness = containers.Map('KeyType','char','ValueType','any');
 allTaskTypesAndConcentrationsPairedWith20thPercentiles = containers.Map('KeyType','char','ValueType','any');
 allTaskTypesAndConcentrationsPairedWith90thPercentiles = containers.Map('KeyType','char','ValueType','any');
 figure; hold on;
 string_that_will_be_used_for_legend = [];
-for i=1:3.5%length(twdbs)
-    if i==2
-        continue;
-    else 
-        
-    end
+for i=1:2.5%length(twdbs)
+    % if i==2
+    %     continue;
+    % else 
+    % 
+    % end
 
     currentDatabase = twdbs{i};
     t = struct2table(currentDatabase);
@@ -90,124 +90,124 @@ for i=1:3.5%length(twdbs)
         xlim([0,20])
 %         hold off
     end
-    
+% 
 %     hold off;
 end
 legend(string_that_will_be_used_for_legend)
-%% display the bar charts for skewness
-task_type_and_concentration = keys(allTaskTypesAndConcentrationsPairedWithSkewness).';
-task_type_and_concentration = char(task_type_and_concentration);
-task_type_and_concentration = string(task_type_and_concentration);
-% disp(task_type_and_concentration(2))
-skews = values(allTaskTypesAndConcentrationsPairedWithSkewness).';
-skews = cell2mat(skews);
-% disp(skews(2));
-tableOfSkewness = table(task_type_and_concentration,skews);
-% disp(tableOfSkewness)
-sortedTableOfSkews = sortrows(tableOfSkewness,"skews");
-disp(sortedTableOfSkews)
-figure
-x = categorical(sortedTableOfSkews.task_type_and_concentration);
-x = reordercats(x,sortedTableOfSkews.task_type_and_concentration);
-y = sortedTableOfSkews.skews;
-bar(x,y)
-title("Skewness by Concentration and Task Type")
+% % display the bar charts for skewness
+% task_type_and_concentration = keys(allTaskTypesAndConcentrationsPairedWithSkewness).';
+% task_type_and_concentration = char(task_type_and_concentration);
+% task_type_and_concentration = string(task_type_and_concentration);
+% % disp(task_type_and_concentration(2))
+% skews = values(allTaskTypesAndConcentrationsPairedWithSkewness).';
+% skews = cell2mat(skews);
+% % disp(skews(2));
+% tableOfSkewness = table(task_type_and_concentration,skews);
+% % disp(tableOfSkewness)
+% sortedTableOfSkews = sortrows(tableOfSkewness,"skews");
+% disp(sortedTableOfSkews)
+% figure
+% x = categorical(sortedTableOfSkews.task_type_and_concentration);
+% x = reordercats(x,sortedTableOfSkews.task_type_and_concentration);
+% y = sortedTableOfSkews.skews;
+% bar(x,y)
+% title("Skewness by Concentration and Task Type")
 
-%% display the bar charts for cdf
-disp([keys(allTaskTypesAndConcentrationsPairedWith90thPercentiles).',values(allTaskTypesAndConcentrationsPairedWith90thPercentiles).'])
-tt20 = string(char(keys(allTaskTypesAndConcentrationsPairedWith20thPercentiles)));
-percentiles20 = cell2mat(values(allTaskTypesAndConcentrationsPairedWith20thPercentiles).');
-tableOf20thPercentiles = table(tt20,percentiles20);
-sortedTableOf20thPercentiles = sortrows(tableOf20thPercentiles,"percentiles20");
-figure
-x20 = categorical(sortedTableOf20thPercentiles.tt20);
-x20 = reordercats(x20,sortedTableOf20thPercentiles.tt20);
-y20 = sortedTableOf20thPercentiles.percentiles20;
-bar(x20,y20);
-title("20th percentiles by Concentrations and Task Types")
-ylim([0,20])
+% display the bar charts for cdf
+% disp([keys(allTaskTypesAndConcentrationsPairedWith90thPercentiles).',values(allTaskTypesAndConcentrationsPairedWith90thPercentiles).'])
+% tt20 = string(char(keys(allTaskTypesAndConcentrationsPairedWith20thPercentiles)));
+% percentiles20 = cell2mat(values(allTaskTypesAndConcentrationsPairedWith20thPercentiles).');
+% tableOf20thPercentiles = table(tt20,percentiles20);
+% sortedTableOf20thPercentiles = sortrows(tableOf20thPercentiles,"percentiles20");
+% figure
+% x20 = categorical(sortedTableOf20thPercentiles.tt20);
+% x20 = reordercats(x20,sortedTableOf20thPercentiles.tt20);
+% y20 = sortedTableOf20thPercentiles.percentiles20;
+% bar(x20,y20);
+% title("20th percentiles by Concentrations and Task Types")
+% ylim([0,20])
+% 
+% tt90 = string(char(keys(allTaskTypesAndConcentrationsPairedWith90thPercentiles)));
+% percentiles90 = cell2mat(values(allTaskTypesAndConcentrationsPairedWith90thPercentiles).');
+% tableOf90thPercentiles = table(tt90,percentiles90);
+% sortedTableOf90thPercentiles = sortrows(tableOf90thPercentiles,"percentiles90");
+% figure
+% x90 = categorical(sortedTableOf90thPercentiles.tt90);
+% x90 = reordercats(x90,sortedTableOf90thPercentiles.tt90);
+% y90 = sortedTableOf90thPercentiles.percentiles90;
+% bar(x90,y90);
+% title("90th Percentiles by Concentrations and Task Types")
+% ylim([0,20])
 
-tt90 = string(char(keys(allTaskTypesAndConcentrationsPairedWith90thPercentiles)));
-percentiles90 = cell2mat(values(allTaskTypesAndConcentrationsPairedWith90thPercentiles).');
-tableOf90thPercentiles = table(tt90,percentiles90);
-sortedTableOf90thPercentiles = sortrows(tableOf90thPercentiles,"percentiles90");
-figure
-x90 = categorical(sortedTableOf90thPercentiles.tt90);
-x90 = reordercats(x90,sortedTableOf90thPercentiles.tt90);
-y90 = sortedTableOf90thPercentiles.percentiles90;
-bar(x90,y90);
-title("90th Percentiles by Concentrations and Task Types")
-ylim([0,20])
-
-%% Create histplots
-for i=1:1.5%length(twdbs)
-    currentDatabase = twdbs{i};
-    t = struct2table(currentDatabase);
-    uniqueTaskType = unique(t.taskType);
-    %     disp(i)
-    %     disp(uniqueConcentrations)
-    %     disp(uniqueTaskType)
-    currentTaskTypes = uniqueTaskType;
-
-    for currentTaskType=1:length(currentTaskTypes)
-        figure
-        hold on
-        tableWithJust1TaskType = t((strcmp(string(t.taskType),string(currentTaskTypes(currentTaskType)))),:);
-        currentConcentrations = unique(tableWithJust1TaskType.conc);
-        currentConcentrations = rmmissing(currentConcentrations);
-
-        if ~isempty(currentConcentrations)
-            allSkews = [];
-            for currentConcentration=1:length(currentConcentrations)
-                modifiedTable = tableWithJust1TaskType(currentConcentrations(currentConcentration) == tableWithJust1TaskType.conc,:);
-                %             disp(strcat("Expected Task Type: ",string(currentTaskTypes(currentTaskType))," Expected Concentration",string(currentConcentrations(currentConcentration))))
-                %             disp(table(modifiedTable.taskType,modifiedTable.conc))
-                allTimingsInsideModifiedTable = modifiedTable.trial_evt_timings;
-                %             disp(size(allTimingsInsideModifiedTable,1))
-                allCol6InModifedTable = [];
-                for currentCol6 = 1:size(allTimingsInsideModifiedTable,1)
-                    currentTimingArray = allTimingsInsideModifiedTable{currentCol6};
-                    allCol6InModifedTable = [allCol6InModifedTable,currentTimingArray(:,6).'];
-                end
-                %             disp(allCol6InModifedTable)
-                if ~isempty(allCol6InModifedTable)
-                    histogram(abs(log(allCol6InModifedTable)),100,'FaceAlpha',0.1)
-                    xlim([0,7])
-                    allSkews = [allSkews,skewness(allCol6InModifedTable)];
-                end
-            end
-        else
-            modifiedTable = t((strcmp(string(tableWithJust1TaskType.taskType),string(currentTaskTypes(currentTaskType)))),:);
-            allTimingsInsideModifiedTable = modifiedTable.trial_evt_timings;
-            %             disp(size(allTimingsInsideModifiedTable,1))
-            allCol6InModifedTable = [];
-            for currentCol6 = 1:size(allTimingsInsideModifiedTable,1)
-                currentTimingArray = allTimingsInsideModifiedTable{currentCol6};
-                allCol6InModifedTable = [allCol6InModifedTable,currentTimingArray(:,6).'];
-            end
-            %             disp(allCol6InModifedTable)
-            if ~isempty(allCol6InModifedTable)
-                histogram(abs(log(allCol6InModifedTable)),100,'FaceAlpha',0.1)
-                xlim([0,7])
-            end
-            allSkews = skewness(allCol6InModifedTable);
-        end
-
-        allConcentrationsAsStrings = num2str(currentConcentrations);
-        if ~isempty(currentConcentrations)
-            legend(allConcentrationsAsStrings)
-        else
-            legend('EQR')
-        end
-
-
-        title(string(currentTaskTypes(currentTaskType)))
-        hold off
-    end
-end
+% %% Create histplots
+% for i=1:1.5%length(twdbs)
+%     currentDatabase = twdbs{i};
+%     t = struct2table(currentDatabase);
+%     uniqueTaskType = unique(t.taskType);
+%     %     disp(i)
+%     %     disp(uniqueConcentrations)
+%     %     disp(uniqueTaskType)
+%     currentTaskTypes = uniqueTaskType;
+% 
+%     for currentTaskType=1:length(currentTaskTypes)
+%         figure
+%         hold on
+%         tableWithJust1TaskType = t((strcmp(string(t.taskType),string(currentTaskTypes(currentTaskType)))),:);
+%         currentConcentrations = unique(tableWithJust1TaskType.conc);
+%         currentConcentrations = rmmissing(currentConcentrations);
+% 
+%         if ~isempty(currentConcentrations)
+%             allSkews = [];
+%             for currentConcentration=1:length(currentConcentrations)
+%                 modifiedTable = tableWithJust1TaskType(currentConcentrations(currentConcentration) == tableWithJust1TaskType.conc,:);
+%                 %             disp(strcat("Expected Task Type: ",string(currentTaskTypes(currentTaskType))," Expected Concentration",string(currentConcentrations(currentConcentration))))
+%                 %             disp(table(modifiedTable.taskType,modifiedTable.conc))
+%                 allTimingsInsideModifiedTable = modifiedTable.trial_evt_timings;
+%                 %             disp(size(allTimingsInsideModifiedTable,1))
+%                 allCol6InModifedTable = [];
+%                 for currentCol6 = 1:size(allTimingsInsideModifiedTable,1)
+%                     currentTimingArray = allTimingsInsideModifiedTable{currentCol6};
+%                     allCol6InModifedTable = [allCol6InModifedTable,currentTimingArray(:,6).'];
+%                 end
+%                 %             disp(allCol6InModifedTable)
+%                 if ~isempty(allCol6InModifedTable)
+%                     histogram(abs(log(allCol6InModifedTable)),100,'FaceAlpha',0.1)
+%                     xlim([0,7])
+%                     allSkews = [allSkews,skewness(allCol6InModifedTable)];
+%                 end
+%             end
+%         else
+%             modifiedTable = t((strcmp(string(tableWithJust1TaskType.taskType),string(currentTaskTypes(currentTaskType)))),:);
+%             allTimingsInsideModifiedTable = modifiedTable.trial_evt_timings;
+%             %             disp(size(allTimingsInsideModifiedTable,1))
+%             allCol6InModifedTable = [];
+%             for currentCol6 = 1:size(allTimingsInsideModifiedTable,1)
+%                 currentTimingArray = allTimingsInsideModifiedTable{currentCol6};
+%                 allCol6InModifedTable = [allCol6InModifedTable,currentTimingArray(:,6).'];
+%             end
+%             %             disp(allCol6InModifedTable)
+%             if ~isempty(allCol6InModifedTable)
+%                 histogram(abs(log(allCol6InModifedTable)),100,'FaceAlpha',0.1)
+%                 xlim([0,7])
+%             end
+%             allSkews = skewness(allCol6InModifedTable);
+%         end
+% 
+%         allConcentrationsAsStrings = num2str(currentConcentrations);
+%         if ~isempty(currentConcentrations)
+%             legend(allConcentrationsAsStrings)
+%         else
+%             legend('EQR')
+%         end
+% 
+% 
+%         title(string(currentTaskTypes(currentTaskType)))
+%         hold off
+%     end
+% end
 
 %% Create histplots, but create 1 plot for each concentration and task type
-for i=1:1.5%length(twdbs)
+for i=1:2.5%length(twdbs)
     currentDatabase = twdbs{i};
     t = struct2table(currentDatabase);
     uniqueTaskType = unique(t.taskType);
@@ -261,7 +261,7 @@ for i=1:1.5%length(twdbs)
                 xlim([0,7])
             end
             legend(string(currentTaskTypes(currentTaskType)))
-            title(strcat(string(currentTaskTypes(currentTaskType))))
+            title(strcat(dbs(i)," ",string(currentTaskTypes(currentTaskType))))
             hold off
         end
 
