@@ -53,20 +53,27 @@ cd(fig_creation_dir);
 fig_creation_dir = cd(fullfile(".","Pattern Analysis","allMaps","Maps By Task Type"));
 create_bar_charts_from_current_maps;
 cd(fig_creation_dir);
-%% Extended Figure 4a & Extended Figure 4b & Extended Figure 4c
-clc;
-fig_creation_dir = cd(fullfile(".","Pattern Analysis/"));
-createCDFsforAllTaskTypes;
+%% Extended Figure 4a & Extended Figure 4b
+fig_creation_dir = cd(fullfile("."));
 cd(fig_creation_dir);
-%% Extended Figure 4d 
-fig_creation_dir = cd(fullfile(".","Pattern Analysis/"));
-createSkewnessBarChartOfTRAndCBAcrossControlAndStress2;
+%% Extended Figure 4c
+fig_creation_dir = cd();
 cd(fig_creation_dir);
-%% Extended Figure 4e & Extended Figure 4f & Extended Figure 4g & Extended Figure 4h
-fig_creation_dir = cd(fullfile(".","Pattern Analysis","allMaps","Maps By Task Type"));
-create_bar_charts_from_current_maps;
+%% Extended Figure 4d
+fig_creation_dir = cd();
 cd(fig_creation_dir);
-
+%% Extended Figure 4e
+fig_creation_dir = cd();
+cd(fig_creation_dir);
+%% Extended Figure 4f
+fig_creation_dir = cd();
+cd(fig_creation_dir);
+%% Extended Figure 4g
+fig_creation_dir = cd();
+cd(fig_creation_dir);
+%% Extended Figure 4h
+fig_creation_dir = cd();
+cd(fig_creation_dir);
 %% Extended Figure 4i
 fig_creation_dir = cd();
 cd(fig_creation_dir);
@@ -81,4 +88,7 @@ beginning_to_end_indexes = [2 2.5];
 cd(fullfile('.','allMaps','Maps By Task Type'));
 createLinearPatternCountGraphsByTaskType;
 ylim([0,1.2])
+cd(fig_creation_dir);
+%% Extended Figure 4j
+fig_creation_dir = cd();
 cd(fig_creation_dir);

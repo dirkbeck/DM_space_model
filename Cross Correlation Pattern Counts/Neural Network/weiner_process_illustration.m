@@ -1,9 +1,9 @@
-clear; %close all
+%clear; %close all
 
 rng(1)
 
 max_t = 10;
-n_sim = 1000;
+n_sim = 5000;
 % columns are the different actions, rows are different plots
 drift_rates_per_s = [0.2,0.5]; 
 n_drift_config = height(drift_rates_per_s);
@@ -17,7 +17,7 @@ max_tsteps = max_t/tstep;
 weiner_process_progress = zeros(n_drift_config, n_sim, n_action, max_tsteps);
 [actions_taken,t_to_decision_dat] = deal(nan(n_drift_config,n_sim));
 
-%% Simulations
+% Simulations
 
 for d = 1:n_drift_config
 
@@ -44,7 +44,7 @@ for d = 1:n_drift_config
             [~,actions_taken(d,i)] = ...
                 max(weiner_process_progress(d,i,:,tsteps_to_decision));
         end
-        t_to_decision_dat(d,i) = (tstep*tsteps_to_decision) + .8;
+        t_to_decision_dat(d,i) = (tstep*tsteps_to_decision) + 1.5;
         weiner_process_progress(d,i,:,tsteps_to_decision+1:end) = nan;
     end
 

@@ -1,6 +1,6 @@
-%% load databases
-[dbs,twdbs] = loadData;
-%% test
+% load databases
+%[dbs,twdbs] = loadData;
+% test
 namesOfDatabases = ["Control","Stress1","Stress2"];
 for currentDB = 1:length(twdbs) %cycle through the databases (AKA the Outer Loop in future comments)
     currentDatabase = twdbs{currentDB}; %get the database
@@ -81,8 +81,8 @@ for currentDB = 1:length(twdbs) %cycle through the databases (AKA the Outer Loop
             [~,sessionDir_neurons] = findAllSessions(twdbs,dbs);                                                %find all the session dates
             % cd("..\Pattern Analysis")
 
-            cd("C:\Users\ldd77\OneDrive\Desktop\Striosome-Matrix-Analysis\Pattern Analysis")                    %move back into the Pattern Analysis Folder
-            [neuron_1_ids,neuron_2_ids] = findSpecifiedNeuronsInDatabases(dbs,sessionDir_neurons,cb_matrix_ids,cb_matrix_ids); %%IMPORTANT CHANGING THIS LINE ALLOWS YOU TO DO MAKE IT MATRIX-Strio pairs, matrix matrix pairs, or strio strio pairs
+            cd("..\Pattern Analysis")                    %move back into the Pattern Analysis Folder
+            [neuron_1_ids,neuron_2_ids] = findSpecifiedNeuronsInDatabases(dbs,sessionDir_neurons,cb_matrix_ids,cb_strio_ids); %%IMPORTANT CHANGING THIS LINE ALLOWS YOU TO DO MAKE IT MATRIX-Strio pairs, matrix matrix pairs, or strio strio pairs
                                                                                                                 % by default it is set to matrix strio pairs 
                                                                                                                 %OG LINE [neuron_1_ids,neuron_2_ids] = findSpecifiedNeuronsInDatabases(dbs,sessionDir_neurons,cb_matrix_ids,cb_strio_ids); 
                                                                                                                 %get the indexes of the desired neurons in the database

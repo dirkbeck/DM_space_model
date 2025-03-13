@@ -9,9 +9,9 @@ myFolder = "C:\Users\ldd77\OneDrive\Desktop\Striosome-Matrix-Analysis\Fig7A_trip
 % myFolder = "C:\Users\ldd77\OneDrive\Desktop\Striosome-Matrix-Analysis\Fig7A_triplet-example\Control split with filter updated michael";
 % myFolder = "C:\Users\ldd77\OneDrive\Desktop\Striosome-Matrix-Analysis\Fig7A_triplet-example\Control split with filter updated michael for EQR"; 
 
-myFolder = "C:\Users\ldd77\OneDrive\Desktop\Striosome-Matrix-Analysis\Fig7A_triplet-example\Control split with filter updated michael for EQR, neg inf micheal for everything else";
-myFolder = "C:\Users\ldd77\OneDrive\Desktop\Striosome-Matrix-Analysis\Fig7A_triplet-example\Control split with filter updated michael for EQR and rev cb, neg inf micheal for everything else";
-myFolder = "C:\Users\ldd77\OneDrive\Desktop\Striosome-Matrix-Analysis\Fig7A_triplet-example\Stress1 split";
+myFolder = fullfile(pwd,"Control split with filter updated michael for EQR, neg inf micheal for everything else");
+myFolder = fullfile(pwd,"Control split with filter updated michael for EQR and rev cb, neg inf micheal for everything else");
+myFolder = fullfile(pwd,"Stress1 split");
 rsquaredThreshold = 0.4;
 significanceThreshold = 0.05; 
 
@@ -113,7 +113,7 @@ if hasBeenSplit
     total_Figures_Count('TR 50 to 100') = total_Figures_Count('TR 0 to 49');
 end
 
-%% format the counts as a table 
+% format the counts as a table 
 figure; hold on
 theFileNAmeNonsense = split(myFolder,"\");
 disp(theFileNAmeNonsense{end})
@@ -129,7 +129,7 @@ xlabel("Task Type")
 ylabel("Percentages")
 subtitle("Created by countingEverything\_updated\_dont\_split\_by\_pos\_neg.m")
 
-%% Add std dvn lines
+% Add std dvn lines
 yline(0.050571,"Label","1 std dvn above the mean")
 yline(0.074893,"Label","1 std dvn above the mean")
 yline(0.099214,"Label","1 std dvn above the mean")

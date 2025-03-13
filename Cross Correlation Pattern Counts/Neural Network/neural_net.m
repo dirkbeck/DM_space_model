@@ -1,6 +1,6 @@
 clear; close all
 
-%% params
+% params
 
 % number of nuerons
 n_SPN_ensembles = 4; % number of eigenvectors mSPN uses
@@ -37,7 +37,7 @@ ctxs = {ctx_train_dat + ev(:,1)', ctx_train_dat + sum(ev(:,1:n_SPN_ensembles),2)
 PFC_PLs = {randn(1,n_PFCPL); randn(1,n_PFCPL) + 1}; % high PFC-PL for complex task
 titles = ["Simple task","Difficult task"];
 
-%% main
+% main
 
 for pfcpl_i = 1:2
 
