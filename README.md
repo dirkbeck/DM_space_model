@@ -27,11 +27,13 @@ Supplementary Fig. 2
 -	Supplementary Fig. 2m,n: model_overview/weiner_process_illustration.m
 -	Supplementary Fig. 2o,p: model_overview/weiner_process_illustration.m
 -	Supplementary Fig. 2q-r: model_overview/dimensionality_from_SPN_activity
+
 Fig. 3
 -	Fig. 3a,b. model_tests/friedman2015optogeneticmanipulation.m
 -	Fig. 3d. model_tests/ctx_sSPN_mSPN_coordinated_activity.n
 -	Fig. 3e. See Exception 2.
 -	Fig. 3f. See Exception 1.
+
 Supplementary Fig. 3
 -	Supplementary Fig. 3a. model_tests/friedman2015optogeneticmanipulation.m
 -	Supplementary Fig. 3b-d. See Exception 2.
@@ -39,37 +41,47 @@ Supplementary Fig. 3
 -	Supplementary Fig. 3g. See Exception 2.
 -	Supplementary Fig. 3h-n. See Exception 2.
 -	Supplementary Fig. 3o-x. model_tests/comparison_to_benchmarks.m
+
 Fig. 4
 -	Fig. 4a. disorder_hypotheses/Friedman2017summary.m
 -	Fig. 4b,c. disorder_hypotheses/Friedman2017_lowD_space.m
 -	Fig. 4d,e. disorder_hypotheses/altered_choice_after_space_transition.m
 -	Fig. 4f. disorder_hypotheses/space_dimensionality_vs_FSI.m
 -	Fig. 4h. disorder_hypotheses/Friedman2020_lowD_space.m
+
 Supplementary Fig. 4
 -	Supplementary Fig. 4a-j
 -	Supplementary Fig. 4k,l. See Exception 1.
 -	Supplementary Fig. 4m,n,q,r. disorder_hypotheses/ctx_to_FSI_synchrony_analysis.m
 -	Supplementary Fig. 4o,p. See Exception 1.
+
 Fig. 5
 -	Fig. 5d-i. dynamic_model_and_neural_net/sSPN_DA_mSPN_dynamic_interaction.m
+
 Supplementary Fig. 5
 -	Supplementary Fig. 5b-e. dynamic_model_and_neural_net/neural_network_model.m
 -	Supplementary Fig. 5g. dynamic_model_and_neural_net/dimension_discrimination_vs_sparsity.m
+
 Fig. 6
 -	Fig. 6a. sampling_space_based_on_activity/decision_space_sampling.py
 -	Fig. 6b,c. sampling_space_based_on_activity/subjective_value_scores_by_space.m
 -	Fig. 6e. sampling_space_based_on_activity/subjective_value_score_extremes.m
+
 Supplementary Fig. 6
 -	dynamic_model_and_neural_net/cortical_snr.m
+
 Fig. 7
 -	Fig. 7b-e. circuit_trajectories/advantage_cost_net_advantage_example.m
 -	Fig. 7f,g. circuit_trajectories/advantage_cost_net_advantage_example.m
+
 Supplementary Fig. 7
 -	Supplementary Fig. 7c-f. dynamic_model_and_neural_net/direct_vs_indirect_pathway_SV.m
 -	Supplementary Fig. 7i. dynamic_model_and_neural_net/direct_vs_indirect_pathway_proximity_theory.m
+
 Supplementary Fig. 8
 -	Supplementary Fig. 8d. sampling_space_based_on_activity/subjective_value_scores_by_space.m
 -	Supplementary Fig. 8f. sampling_space_based_on_activity/subjective_value_score_extremes.m
+
 Supplementary Fig. 9
 -	Fig. 9a. circuit_trajectories/sSNC_DA_LH_trajectories_examples2.m
 -	Fig. 9b,c. circuit_trajectories/changing_space_value_between_trials.m
