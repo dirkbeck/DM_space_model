@@ -1,13 +1,13 @@
 The topics correspond to the latest version of the manuscript (updated after one round of review) as follows:
-•	model_overview: Figs. 1,2 and Supplementary Fig. 2
-•	model_tests: Fig. 3a-d and Supplementary Fig. 3a,o-x
-•	disorder_hypotheses: Fig. 4 and Supplementary Fig. 4m-r
-•	dynamic_model_and_neural_net: Fig. 5 and Supplementary Figs. 5, 6, 7a-i
-•	importance_and_RPEs: Supplementary Fig. 7k,l.
-•	day_to_day_space_sampling: Fig. 6 and Supplementary Fig. 8
-•	circuit_trajectories: Fig. 7, Supplementary Fig. 9
-•	neuron_pair_analysis: Fig. 3f, Supplementary Fig. 3k-p
-•	Cross Correlation Pattern Counts: Fig. 3e, Supplementary Fig. 3b-n, Supplementary Fig. 3a-j.
+- model_overview: Figs. 1,2 and Supplementary Fig. 2
+- model_tests: Fig. 3a-d and Supplementary Fig. 3a,o-x
+- disorder_hypotheses: Fig. 4 and Supplementary Fig. 4m-r
+- dynamic_model_and_neural_net: Fig. 5 and Supplementary Figs. 5, 6, 7a-i
+- importance_and_RPEs: Supplementary Fig. 7k,l.
+- day_to_day_space_sampling: Fig. 6 and Supplementary Fig. 8
+- circuit_trajectories: Fig. 7, Supplementary Fig. 9
+- neuron_pair_analysis: Fig. 3f, Supplementary Fig. 3k-p
+- Cross Correlation Pattern Counts: Fig. 3e, Supplementary Fig. 3b-n, Supplementary Fig. 3a-j.
 For additional detail on directory<->figure mapping, please refer to the Methods section of the manuscript, where the analysis corresponding to each figure is explained and a link is provided to the github.
 All .m files run in MATLAB R2021a. To run the code:
 1)	Git clone the repository onto a local machine.
