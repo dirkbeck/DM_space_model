@@ -1,4 +1,4 @@
-The topics correspond to the latest version of the manuscript (updated after one round of review) as follows:
+The topics correspond to the decision-space paper (https://pmc.ncbi.nlm.nih.gov/articles/PMC11643335/) as follows:
 - model_overview: Figs. 1,2 and Supplementary Fig. 2
 - model_tests: Fig. 3a-d and Supplementary Fig. 3a,o-x
 - disorder_hypotheses: Fig. 4 and Supplementary Fig. 4m-r
